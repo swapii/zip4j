@@ -10,6 +10,7 @@ import net.lingala.zip4j.model.ZipModel;
 import net.lingala.zip4j.model.enums.RandomAccessFileMode;
 import net.lingala.zip4j.progress.ProgressMonitor;
 import net.lingala.zip4j.tasks.RemoveFilesFromZipTask.RemoveFilesFromZipTaskParameters;
+import net.lingala.zip4j.util.MathUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -103,7 +104,7 @@ public class RemoveFilesFromZipTask extends AbstractModifyFileTask<RemoveFilesFr
   }
 
   private void updateHeaders(FileHeader fileHeaderThatWasRemoved, long offsetToSubtract) throws ZipException {
-    updateOffsetsForAllSubsequentFileHeaders(zipModel, fileHeaderThatWasRemoved, Math.negateExact(offsetToSubtract));
+    updateOffsetsForAllSubsequentFileHeaders(zipModel, fileHeaderThatWasRemoved, MathUtils.negateExact(offsetToSubtract));
 
     EndOfCentralDirectoryRecord endOfCentralDirectoryRecord = zipModel.getEndOfCentralDirectoryRecord();
     endOfCentralDirectoryRecord.setOffsetOfStartOfCentralDirectory(
